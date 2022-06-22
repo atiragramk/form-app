@@ -1,99 +1,57 @@
 import React, {Component} from "react";
 import { Input, Button } from "./";
+import { initialState } from "./utils";
 
 
 import './form.scss'
 
 export class Form extends Component {
+
     constructor() {
         super();
-        this.state = {
-            name: {
-                title: "Name",
-                id: 'name',
-                type: "text",
-                value: '',
-                error: null,
-                required: true,
-                disabled: true,
-                message: 'Input correct name',
-                validator: (value) => value.length
-            },
-            email: {
-                title: "Email",
-                id: 'email',
-                type: 'email',
-                value: '',
-                error: false,
-                required: false,
-                disabled: false,
-                message: 'Input correct email',
-                validator: (value) => {
-                    const re =/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-                    return re.test(value);
-                },
-            },
-            password: {
-                title: "Password",
-                id: 'password',
-                type: "password",
-                value: '',
-                error: null,
-                required: true,
-                disabled: true,
-                message: 'Create your password',
-                validator: (value) => value.length,
-            },
-            confirm: {
-                title: "Password",
-                id: 'confirm',
-                type: "password",
-                value: '',
-                error: null,
-                required: true,
-                disabled: true,
-                message: 'Passwords do not match',
-                validator: (password) => {
-                    if(password) {
-                        const {password:{value}} = this.state;
-                        return password === value;
-                    }
-                    return password.length;
-
-                }
-            },
-            submit: {
-                type: 'submit',
-                value: 'Submit',
-            },
-            reset: {
-                type: 'button',
-                value: 'Reset',
-            },  
+        this.state = initialState;
+        this.ref = {
+            passRef: React.createRef(),
+            confirmRef: React.createRef(),
         }
+
     }
 
-    handleChangeValue = (event) => {
+    handleChange = (event) => {
         const property = event.target.name;
-        const value = event.target.value;
-        const {[property]: {validator}} = this.state;
-        const error = validator(value);
-        if (error) {
-            this.setState((state) => ({
-                [property]: {...state[property], disabled: false},
-            }))
+        const targetValue = event.target.value;
+        const {[property]: {validator}} = this.state.fields;
+        const {fields: {password, confirm}} = this.state;
+        const error = validator(targetValue, password.value);
+        if (property === 'password'){
+            const error = validator(targetValue)
+            const confirmError = confirm.validator(confirm.value, targetValue);
+
+            this.setState({
+                fields: {
+                    ...this.state.fields,
+                    password: {...password, value: targetValue, error: error, disabled: Boolean(error)},
+                    confirm: {...confirm,error: confirmError, disabled: Boolean(confirmError)}
+                }
+            })
         } else {
-            this.setState((state) => ({
-                [property]: {...state[property], disabled: true},
-            }))
+            this.setState({
+                fields: {
+                    ...this.state.fields,
+                    [property]: {
+                        ...this.state.fields[property], 
+                        value: targetValue, 
+                        error: error, 
+                        disabled: Boolean(error)
+                    },
+                }
+                
+            })
         }
-        this.setState((state) => ({
-            [property]: {...state[property], value, error: !error},
-        }))
     }
 
-    onDisabled = () => {
-        const {name, password, confirm} = this.state
+    handleDisable = () => {
+        const { fields:{name, password, confirm} } = this.state
         if (name.disabled || password.disabled || confirm.disabled) {
             return true
         } else {
@@ -102,61 +60,83 @@ export class Form extends Component {
     }
 
 
-    onViewPassword = (event, id) => {
+    handleToggleView = (event, id) => {
         event.preventDefault();
         const target = event.target;
-        const input = document.getElementById(id);
-        if (input.getAttribute('type') === 'password') {
-            target.classList.add('password_view');
-            this.setState((state) => ({
-                [id]: {...state[id], type: 'text'}
-            }))
+        if (target.classList.contains('password-view')) {
+            target.classList.remove('password-view');
+            this.setState({
+                fields:{
+                    ...this.state.fields,
+                    [id]: {...this.state.fields[id], type: 'password'}
+                }
+            })
         } else {
-            target.classList.remove('password_view');
-            this.setState((state) => ({
-                [id]: {...state[id], type: 'password'}
-            }))
+            target.classList.add('password-view');
+            this.setState({
+                fields:{
+                    ...this.state.fields,
+                    [id]: {...this.state.fields[id], type: 'text'}
+                }
+            })
         }
     }
 
-    onReset = () => {
-        const {name, email, password, confirm} = this.state;
-        this.setState(() => ({
-            name:{...name, value: '', error: null, disabled: true},
-            email:{...email, value: '', error: null, disabled: true},
-            password:{...password, value: '', error: null, disabled: true, type: 'password'},
-            confirm:{...confirm, value: '', error: null, disabled: true, type: 'password'},
-        }));
-        const view = document.querySelectorAll('#view');
-        view.forEach(item => item.classList.remove('password_view'));
+    handleReset = () => {
+        this.setState({
+            fields: initialState.fields
+        });
+        const {passRef, confirmRef} = this.ref
+        passRef.current.classList.remove('password-view');
+        confirmRef.current.classList.remove('password-view');
     }
 
-    onSubmit = (event) => {
+    handleSubmit = (event) => {
         event.preventDefault();
-        const {password, confirm} = this.state
+        const {password, confirm} = this.state.fields
         if (password.value === confirm.value) {
             alert('Form is submitted');
-            this.onReset();
+            this.handleReset();
         } else {
-            this.setState(() => ({
-                password: {...password, error: !password.error},
-                confirm: {...confirm, error: !confirm.error}
-            }))
+            const {fields} = this.state
+            const updatedState = {};
+            Object.entries(fields).map(([label, state]) => {
+                const error = state.validator(state.value, state.password);
+                updatedState[label] = {...state, error}
+            })
+            this.setState({
+                fields: updatedState,
+            })
         }
     }
 
     render() {
-        const {name, email, password, confirm, submit, reset} = this.state;
-        const disabled = this.onDisabled();
+        const {fields, reset, submit} = this.state;
+        const disabled = this.handleDisable();
+        
         return (
-            <form className="form" onSubmit={this.onSubmit}>
+            <form className="form" onSubmit={this.handleSubmit} onReset={this.handleReset}>
                 <h2>Form</h2>
-                <Input name={name} onChange={this.handleChangeValue}/>
-                <Input name={email} onChange={this.handleChangeValue}/>
-                <Input name={password} onChange={this.handleChangeValue} onView={this.onViewPassword}/>
-                <Input name={confirm} onChange={this.handleChangeValue} onView={this.onViewPassword}/>
+                {Object.entries(fields).map(([label, state]) => {
+                    const {type, value, error, id, title, message} = state;
+                    return (
+                        <Input
+                        key={label}
+                        type={type}
+                        value={value}
+                        error={error}
+                        id={id}
+                        title={title}
+                        message={message}
+                        onChange={this.handleChange}
+                        onBlur={this.handleChange}
+                        onToggleView={this.handleToggleView}
+                        inputRefs={this.ref}
+                        />
+                    );
+                })}
                 <div className="wrapper__btn">
-                    <Button type={reset} onClick={this.onReset}/>
+                    <Button type={reset}/>
                     <Button type={submit} disabled={disabled}/>
                 </div>
             </form>

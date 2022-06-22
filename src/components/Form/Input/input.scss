@@ -13,7 +13,7 @@
         outline: none;
         border-color:rgb(20, 63, 106);;
     }
-    &_error{
+    &-errors{
         border: 2px solid rgb(255, 56, 56);
         // border-color: rgb(255, 56, 56);
         &:focus{
@@ -43,7 +43,7 @@
     display: inline-block;
     width: 20px;
     height: 20px;
-    &_view {
+    &-view {
         background: url(https://snipp.ru/demo/495/no-view.svg) 0 0 no-repeat;
     }
 }

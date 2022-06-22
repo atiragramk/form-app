@@ -4,10 +4,16 @@ import './input.scss'
 
 export class Input extends Component {
     render() {
-        const 
-            {name:{type, value, error, id, required, title, message}, 
+        const {
+            type, 
+            value, 
+            error, 
+            id,
+            title,
+            inputRefs,
             onChange, 
-            onView} = this.props;
+            onToggleView } = this.props;
+        const {passRef, confirmRef} = inputRefs;
         return (
             <div className="wrapper">
                 <label 
@@ -15,22 +21,21 @@ export class Input extends Component {
                 htmlFor={id}>
                     {id === 'confirm' ? `Confirm ${title}`: `${title}`}</label>
                 <input
-                required={required}
-                className={error ? `input input_error` : 'input'}
+                className={error ? `input input-errors` : 'input'}
                 value={value} 
                 placeholder={id === 'confirm' ? `Confirm ${title}`: `Enter ${title}`} 
                 name={id} 
                 type={type} 
                 id={id}
-                onBlur={required ? onChange : null}
+                onBlur={onChange}
                 onChange={onChange}/>
                 {title === 'Password' && 
                 <a href="#"
-                id="view" 
                 className="password"
-                onClick={(event) => onView(event, id)}></a>}
+                ref={id === 'confirm' ? confirmRef : passRef}
+                onClick={(event) => onToggleView(event, id)}></a>}
                 {error &&
-                <div className="error">{message}</div>}
+                <div className="error">{error}</div>}
             </div>
         )
     }

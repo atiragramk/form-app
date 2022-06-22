@@ -5,14 +5,13 @@ import './button.scss'
 export class Button extends Component {
 
     render() {
-        const {type:{type, value}, disabled, onClick} = this.props
+        const {type:{type, value}, disabled} = this.props
         return(
             <input
-            className={disabled ? 'btn btn__disabled' : 'btn'} 
+            className={disabled ? 'btn btn-disabled' : 'btn'} 
             type={type}
             value={value}
-            disabled={disabled}
-            onClick={onClick}></input>
+            disabled={disabled}></input>
         )
     }
 }
