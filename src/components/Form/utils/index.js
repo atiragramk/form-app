@@ -69,6 +69,5 @@ export const initialState = {
     reset: {
         type: 'reset',
         value: 'Reset',
-    }, 
-    isErrors: null,
+    },
 }

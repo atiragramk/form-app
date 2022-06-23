@@ -20,8 +20,11 @@ export class Form extends Component {
     handleChange = (event) => {
         const property = event.target.name;
         const targetValue = event.target.value;
-        const {[property]: {validator}} = this.state.fields;
-        const {fields: {password, confirm}} = this.state;
+        const {
+            fields,
+            fields:{password, confirm},
+            fields:{[property]: {validator}}
+        } = this.state
         const error = validator(targetValue, password.value);
         if (property === 'password'){
             const error = validator(targetValue)
@@ -29,7 +32,7 @@ export class Form extends Component {
 
             this.setState({
                 fields: {
-                    ...this.state.fields,
+                    ...fields,
                     password: {...password, value: targetValue, error: error, disabled: Boolean(error)},
                     confirm: {...confirm,error: confirmError, disabled: Boolean(confirmError)}
                 }
@@ -37,15 +40,10 @@ export class Form extends Component {
         } else {
             this.setState({
                 fields: {
-                    ...this.state.fields,
-                    [property]: {
-                        ...this.state.fields[property], 
-                        value: targetValue, 
-                        error: error, 
-                        disabled: Boolean(error)
+                    ...fields,
+                    [property]: {...fields[property], value: targetValue, error: error, disabled: Boolean(error)
                     },
                 }
-                
             })
         }
     }
@@ -62,21 +60,22 @@ export class Form extends Component {
 
     handleToggleView = (event, id) => {
         event.preventDefault();
+        const {fields} = this.state
         const target = event.target;
         if (target.classList.contains('password-view')) {
             target.classList.remove('password-view');
             this.setState({
                 fields:{
-                    ...this.state.fields,
-                    [id]: {...this.state.fields[id], type: 'password'}
+                    ...fields,
+                    [id]: {...fields[id], type: 'password'}
                 }
             })
         } else {
             target.classList.add('password-view');
             this.setState({
                 fields:{
-                    ...this.state.fields,
-                    [id]: {...this.state.fields[id], type: 'text'}
+                    ...fields,
+                    [id]: {...fields[id], type: 'text'}
                 }
             })
         }
@@ -93,12 +92,14 @@ export class Form extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        const {password, confirm} = this.state.fields
+        const {
+            fields,
+            fields: {password, confirm}
+        } = this.state
         if (password.value === confirm.value) {
             alert('Form is submitted');
             this.handleReset();
         } else {
-            const {fields} = this.state
             const updatedState = {};
             Object.entries(fields).map(([label, state]) => {
                 const error = state.validator(state.value, state.password);
