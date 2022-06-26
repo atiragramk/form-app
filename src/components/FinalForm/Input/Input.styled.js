@@ -35,7 +35,7 @@ export const Label = styled.label`
   padding: 1px;
 `;
 
-export const Wrapper = styled.label`
+export const Wrapper = styled.div`
   position: relative;
   margin-bottom: 10px;
 `;

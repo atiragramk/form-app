@@ -61,7 +61,7 @@ export const initialState = {
       id: "confirm",
       type: "password",
       value: "",
-      placeholder: "Confirm your password",
+      placeholder: "Confirm password",
     },
   },
 };
