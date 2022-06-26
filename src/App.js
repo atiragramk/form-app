@@ -1,4 +1,5 @@
-import {FinalForm} from './components/FinalForm/index'
+import {FinalForm} from './components/FinalForm/'
+import { Form } from './components/Form'
 
 import "./app.scss";
 

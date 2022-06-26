@@ -6,7 +6,7 @@ import { initialState, validate } from "./utils";
 import { Wrapper, FormStyled } from "./Form.styled";
 
 export class FinalForm extends Component {
-  handleSubmit = async (values) => {
+  handleSubmit = async(values) => {
     alert(JSON.stringify(values));
   };
 
@@ -17,12 +17,12 @@ export class FinalForm extends Component {
       <Form
         onSubmit={this.handleSubmit}
         validate={(values) => validate(values)}
-        render={({ handleSubmit, form: { restart }, errors }) => {
+        render={({ handleSubmit, form: { reset }, errors }) => {
           const disabled = Object.values(errors).length;
           return (
             <FormStyled
-              onSubmit={() => handleSubmit().then(restart)}
-              onReset={restart}
+              onSubmit={() => handleSubmit().then(reset)}
+              onReset={reset}
             >
               <h2>Form</h2>
               {Object.entries(fields).map(([fieldName, state]) => {
