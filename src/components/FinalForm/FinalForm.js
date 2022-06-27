@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import { Form } from "react-final-form";
 import { Input, Button } from "./";
-import { initialState, validate } from "./utils";
+import { validators} from "./utils";
+import { initialState } from "./constants";
 
-import { StyledDiv, StyledForm } from "./styled";
+import { StyledWrapper, StyledForm } from "./styled";
+
+
 
 export class FinalForm extends Component {
   
@@ -18,7 +21,6 @@ export class FinalForm extends Component {
     return (
       <Form
         onSubmit={this.handleSubmit}
-        validate={(values) => validate(values)}
         render={({ handleSubmit, form: { reset, restart }, errors }) => {
           const disabled = Object.values(errors).length;
           return (
@@ -36,13 +38,14 @@ export class FinalForm extends Component {
                     type={type}
                     label={label}
                     placeholder={placeholder}
+                    validate={validators}
                   />
                 );
               })}
-              <StyledDiv>
+              <StyledWrapper>
                 <Button type="reset">Reset</Button>
                 <Button type="submit" disabled={disabled}>Submit</Button>
-              </StyledDiv>
+              </StyledWrapper>
             </StyledForm>
           );
         }}

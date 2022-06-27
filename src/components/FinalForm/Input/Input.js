@@ -22,9 +22,9 @@ export class Input extends Component {
   };
 
   render() {
-    const { label, placeholder, id, type} = this.props;
+    const { label, placeholder, id, type, validate} = this.props;
     return (
-      <Field name={id}>
+      <Field name={id} validate={validate[id]} >
         {({ input, meta }) => {
           const { error, touched } = meta;
           return (
