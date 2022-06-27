@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Input = styled.input.attrs({classNames: 'disabled'})`
+export const StyledInput = styled.input.attrs({classNames: 'disabled'})`
   margin: 20px 0 0 10px;
   padding: 8px;
   min-width: 100px;

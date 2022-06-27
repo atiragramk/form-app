@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
+export const StyledDiv = styled.div`
   float: right;
 `;
 
-export const FormStyled = styled.form`
+export const StyledForm = styled.form`
   padding: 20px 40px;
   border-radius: 10px;
   box-shadow: 0px 1px 5px rgb(113, 113, 131);

@@ -1,7 +1,7 @@
 import { Field } from "react-final-form";
 import React, { Component } from "react";
 
-import { InputField, Error, Label, Wrapper, Link } from "./Input.styled";
+import { StyledInput, StyledError, StyledLabel, StyledWrapper, StyledLink } from "./styled";
 
 export class Input extends Component {
   constructor() {
@@ -20,31 +20,32 @@ export class Input extends Component {
       this.inputRef.current.type = "password";
     }
   };
+
   render() {
-    const { label, placeholder, id, type, value } = this.props;
+    const { label, placeholder, id, type} = this.props;
     return (
       <Field name={id}>
         {({ input, meta }) => {
           const { error, touched } = meta;
           return (
-            <Wrapper className="wrapper">
-              <Label>{label}</Label>
-              <InputField
+            <StyledWrapper className="wrapper">
+              <StyledLabel htmlFor={id}>{label}</StyledLabel>
+              <StyledInput
                 {...input}
                 className={error && touched && "input-error"}
                 type={type}
                 placeholder={placeholder}
                 ref={this.inputRef}
               />
-              {error && touched && <Error>{error}</Error>}
+              {error && touched && <StyledError>{error}</StyledError>}
               {type === "password" && (
-                <Link
+                <StyledLink
                   href="#"
                   ref={this.passwordRef}
                   onClick={this.handleToggleView}
                 />
               )}
-            </Wrapper>
+            </StyledWrapper>
           );
         }}
       </Field>

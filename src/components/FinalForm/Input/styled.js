@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const InputField = styled.input.attrs({ classNames: "input-error" })`
+export const StyledInput = styled.input.attrs({ classNames: "input-error" })`
   padding: 15px;
   border-radius: 10px;
   border: 2px solid rgb(48, 151, 253);
@@ -20,14 +20,14 @@ export const InputField = styled.input.attrs({ classNames: "input-error" })`
   }
 `;
 
-export const Error = styled.div`
+export const StyledError = styled.div`
   font-size: 11px;
   color: red;
   position: absolute;
   margin-bottom: 5px;
 `;
 
-export const Label = styled.label`
+export const StyledLabel = styled.label`
   position: absolute;
   font-size: 12px;
   background-color: white;
@@ -35,12 +35,12 @@ export const Label = styled.label`
   padding: 1px;
 `;
 
-export const Wrapper = styled.div`
+export const StyledWrapper = styled.div`
   position: relative;
   margin-bottom: 10px;
 `;
 
-export const Link = styled.a.attrs({classNames: 'view'})`
+export const StyledLink = styled.a.attrs({classNames: 'view'})`
   background: url(https://snipp.ru/demo/495/view.svg) 0 0 no-repeat;
   position: absolute;
   top: 35px;

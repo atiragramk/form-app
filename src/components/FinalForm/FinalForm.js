@@ -3,12 +3,14 @@ import { Form } from "react-final-form";
 import { Input, Button } from "./";
 import { initialState, validate } from "./utils";
 
-import { Wrapper, FormStyled } from "./Form.styled";
+import { StyledDiv, StyledForm } from "./styled";
 
 export class FinalForm extends Component {
+  
   handleSubmit = (values) => {
     alert(JSON.stringify(values));
   };
+
 
   render() {
     const { fields } = initialState;
@@ -20,8 +22,8 @@ export class FinalForm extends Component {
         render={({ handleSubmit, form: { reset, restart }, errors }) => {
           const disabled = Object.values(errors).length;
           return (
-            <FormStyled
-              onSubmit={() => handleSubmit().then(restart)}
+            <StyledForm
+              onSubmit={() => {handleSubmit(); restart()}}
               onReset={reset}
             >
               <h2>Final Form</h2>
@@ -37,13 +39,11 @@ export class FinalForm extends Component {
                   />
                 );
               })}
-              <Wrapper>
+              <StyledDiv>
                 <Button type="reset">Reset</Button>
-                <Button type="submit" disabled={disabled}>
-                  Submit
-                </Button>
-              </Wrapper>
-            </FormStyled>
+                <Button type="submit" disabled={disabled}>Submit</Button>
+              </StyledDiv>
+            </StyledForm>
           );
         }}
       />

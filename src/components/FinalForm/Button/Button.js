@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Input } from "./Button.styled";
+import { StyledInput } from "./styled";
 
 export class Button extends Component {
   render() {
@@ -8,7 +8,7 @@ export class Button extends Component {
     const { type, children, disabled } = this.props;
     
     return (
-      <Input
+      <StyledInput
         className={disabled ? "disabled" : null}
         type={type}
         value={children}
