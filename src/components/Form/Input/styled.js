@@ -1,8 +1,6 @@
-.wrapper {
-  position: relative;
-  margin-bottom: 10px;
-}
-.input {
+import styled from "styled-components";
+
+export const StyledInput = styled.input.attrs({ classNames: "input-error" })`
   padding: 15px;
   border-radius: 10px;
   border: 2px solid rgb(48, 151, 253);
@@ -13,29 +11,36 @@
     outline: none;
     border-color: rgb(20, 63, 106);
   }
-  &-errors {
+  &.input-error {
     border: 2px solid rgb(255, 56, 56);
-    // border-color: rgb(255, 56, 56);
     &:focus {
       outline: none;
       border-color: rgb(255, 56, 56);
     }
   }
-}
-.error {
+`;
+
+export const StyledError = styled.div`
   font-size: 11px;
   color: red;
   position: absolute;
   margin-bottom: 5px;
-}
-.label {
+`;
+
+export const StyledLabel = styled.label`
   position: absolute;
   font-size: 12px;
   background-color: white;
   margin: 12px;
   padding: 1px;
-}
-.password {
+`;
+
+export const StyledWrapper = styled.div`
+  position: relative;
+  margin-bottom: 10px;
+`;
+
+export const StyledLink = styled.a.attrs({classNames: 'view'})`
   background: url(https://snipp.ru/demo/495/view.svg) 0 0 no-repeat;
   position: absolute;
   top: 35px;
@@ -43,7 +48,7 @@
   display: inline-block;
   width: 20px;
   height: 20px;
-  &-view {
+  &.view {
     background: url(https://snipp.ru/demo/495/no-view.svg) 0 0 no-repeat;
   }
-}
+`;

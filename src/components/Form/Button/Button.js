@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import "./button.scss";
+
+import { StyledInput } from "./styled";
+
 
 export class Button extends Component {
   render() {
@@ -8,12 +10,12 @@ export class Button extends Component {
       disabled,
     } = this.props;
     return (
-      <input
+      <StyledInput
         className={disabled ? "btn btn-disabled" : "btn"}
         type={type}
         value={value}
         disabled={disabled}
-      ></input>
+      />
     );
   }
 }

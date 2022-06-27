@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Input, Button } from "./";
 import { initialState } from "./utils";
 
-import "./form.scss";
+import { StyledWrapper, StyledForm } from "./styled";
 
 export class Form extends Component {
   constructor() {
@@ -115,14 +115,19 @@ export class Form extends Component {
     const disabled = this.handleDisable();
 
     return (
-      <form
-        className="form"
-        onSubmit={this.handleSubmit}
-        onReset={this.handleReset}
-      >
+      <StyledForm onSubmit={this.handleSubmit} onReset={this.handleReset}>
         <h2>Form</h2>
         {Object.entries(fields).map(([fieldName, state]) => {
-          const { type, value, error, id, title, disabled, placeholder, label } = state;
+          const {
+            type,
+            value,
+            error,
+            id,
+            title,
+            disabled,
+            placeholder,
+            label,
+          } = state;
           return (
             <Input
               key={fieldName}
@@ -142,11 +147,11 @@ export class Form extends Component {
             />
           );
         })}
-        <div className="wrapper__btn">
+        <StyledWrapper>
           <Button type={reset} />
           <Button type={submit} disabled={disabled} />
-        </div>
-      </form>
+        </StyledWrapper>
+      </StyledForm>
     );
   }
 }

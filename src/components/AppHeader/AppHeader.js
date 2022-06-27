@@ -1,21 +1,27 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-import { Ul, Li, Nav} from "./AppHeader.styled";
+import { StyledUl, StyledLi, StyledNav} from "./styled";
 
 export const AppHeader = () => {
     return (
-        <Nav>
-            <Ul>
-                <Li>
-                  <Link to="/">Home</Link>
-                </Li>
-                <Li>
-                  <Link to="/form">Form</Link>
-                </Li>
-                <Li>
-                  <Link to="/final-form">Final-Form</Link>
-                </Li>
-            </Ul>
-        </Nav>
+        <StyledNav>
+            <StyledUl>
+                <StyledLi>
+                  <NavLink 
+                  className={({isActive}) => isActive && 'active'}
+                  to="/">Home</NavLink>
+                </StyledLi>
+                <StyledLi>
+                  <NavLink 
+                  className={({isActive}) => isActive && 'active'}
+                  to="/form">Form</NavLink>
+                </StyledLi>
+                <StyledLi>
+                  <NavLink 
+                  className={({isActive}) => isActive && 'active'}
+                  to="/final-form">Final-Form</NavLink>
+                </StyledLi>
+            </StyledUl>
+        </StyledNav>
     )
 }

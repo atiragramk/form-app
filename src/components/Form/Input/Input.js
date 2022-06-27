@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
-import "./input.scss";
+import { StyledInput, StyledError, StyledLabel, StyledWrapper, StyledLink } from "./styled";
+
 
 export class Input extends Component {
   render() {
@@ -19,12 +20,12 @@ export class Input extends Component {
       onToggleView,
     } = this.props;
     return (
-      <div className="wrapper">
-        <label className="label" htmlFor={id}>
+      <StyledWrapper >
+        <StyledLabel htmlFor={id}>
           {label}
-        </label>
-        <input
-          className={error ? `input input-errors` : "input"}
+        </StyledLabel>
+        <StyledInput
+          className={error && "input-error"}
           value={value}
           placeholder={placeholder}
           name={id}
@@ -34,15 +35,15 @@ export class Input extends Component {
           onChange={onChange}
         />
         {title === "Password" && (
-          <a
+          <StyledLink
             href="#"
             className="password"
             ref={id === "confirm" ? confirmRef : passwordRef}
             onClick={(event) => onToggleView(event, id)}
-          ></a>
+          />
         )}
-        {error && <div className="error">{error}</div>}
-      </div>
+        {error && <StyledError>{error}</StyledError>}
+      </StyledWrapper>
     );
   }
 }

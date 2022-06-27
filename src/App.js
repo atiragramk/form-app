@@ -3,13 +3,12 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { FinalForm } from "./components/FinalForm/";
 import { Form } from "./components/Form";
 import { AppHeader } from "./components/AppHeader";
-
-import "./app.scss";
+import { StyledHeader } from "./styled";
 
 export function App() {
   return (
     <div>
-      <header className="app__header">
+      <StyledHeader>
         <Router>
             <AppHeader/>
             <Routes>
@@ -17,7 +16,7 @@ export function App() {
                 <Route path="final-form" element={<FinalForm/>}/>
             </Routes>
         </Router>
-      </header>
+      </StyledHeader>
     </div>
   );
 }
