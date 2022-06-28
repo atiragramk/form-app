@@ -21,3 +21,16 @@ export const StyledError = styled.div`
   position: absolute;
   margin-bottom: 5px;
 `;
+
+export const StyledLink = styled.a`
+  background: ${({ view }) =>
+    view
+      ? "url(https://snipp.ru/demo/495/no-view.svg) 0 0 no-repeat"
+      : "url(https://snipp.ru/demo/495/view.svg) 0 0 no-repeat"};
+  position: absolute;
+  top: 35px;
+  right: 10px;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+`;

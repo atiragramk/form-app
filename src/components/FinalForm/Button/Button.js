@@ -9,7 +9,6 @@ export class Button extends Component {
     
     return (
       <StyledInput
-        className={disabled ? "disabled" : null}
         type={type}
         value={children}
         disabled={disabled}

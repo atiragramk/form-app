@@ -1,23 +1,18 @@
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 
-export const StyledNav = styled.nav`
-    min-width: 300px
-`
-
-export const StyledUl = styled.ul`
+export const StyledWrapper = styled.nav`
+  min-width: 300px;
   display: flex;
   padding: 0;
 `;
 
-export const StyledLi = styled.li.attrs({classNames : 'active'})`
-  list-style: none;
+export const StyledNavLink = styled(NavLink)`
+  text-decoration: none;
   margin: 20px auto;
   font-size: 18px;
-  a {
-    text-decoration: none;
-    color: rgb(48, 151, 253);
-    &.active {
-      color:  rgb(16 15 114);
-    }
+  color: rgb(48, 151, 253);
+  &.active {
+    color: rgb(16 15 114);
   }
 `;
